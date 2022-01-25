@@ -20,7 +20,7 @@ import java.util.List;
 public class Pelicula {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String imagen;
@@ -35,13 +35,14 @@ public class Pelicula {
     private boolean deleted = Boolean.FALSE;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "genero_id", insertable = false, updatable = false)
+    @JoinColumn(name = "genero_id" /*,insertable = false,updatable = false*/)
     private Genero genero;
 
-    @Column(name = "genero_id", nullable = false)
-    private Long generoId;
+    /*@Column(name = "genero_id", nullable = false)
+    private Long generoId;*/
 
-    @OneToMany(
+
+    @ManyToMany(
             cascade = {
                     CascadeType.PERSIST,
                     CascadeType.MERGE

@@ -25,11 +25,11 @@ public class PeliculaMapper {
         pelicula.setFechaCreacion(dto.getFechaCreacion());
         pelicula.setCalificacion(dto.getCalificacion());
         pelicula.setGeneroId(dto.getGeneroId());
-        return pelicula;
 
-        /*personajes
         List<Personaje> personajeList = personajeMapper.personajeDTOList2Personaje(dto.getPersonajes());
-        pelicula.setPersonajes(personajeList);*/
+        pelicula.setPersonajes(personajeList);
+
+        return pelicula;
     }
 
     public PeliculaDTO pelicula2DTO(Pelicula pelicula){
@@ -40,6 +40,9 @@ public class PeliculaMapper {
         dto.setFechaCreacion(pelicula.getFechaCreacion());
         dto.setCalificacion(pelicula.getCalificacion());
         dto.setGeneroId(pelicula.getGeneroId());
+
+        List<PersonajeDTO> personajeDTO = personajeMapper.personajeSet2DTOListPersonaje(pelicula.getPersonajes());
+        dto.setPersonajes(personajeDTO);
         return dto;
     }
 

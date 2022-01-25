@@ -64,12 +64,20 @@ public class PersonajeMapper {
         personaje.setHistoria(dto.getHistoria());
     }
 
-    /*public List<Personaje> personajeDTOList2Personaje(List<PersonajeDTO> personajeDTO){
+    public List<Personaje> personajeDTOList2Personaje(List<PersonajeDTO> personajeDTO){
         List<Personaje> personajeList = new ArrayList<>();
         for (PersonajeDTO dto: personajeDTO) {
             personajeList.add(personajeDTO2Peronaje(dto));
         }
         return personajeList;
-    }*/
+    }
+
+    public List<PersonajeDTO> personajeSet2DTOListPersonaje(List<Personaje> personajeList){
+        List<PersonajeDTO> dtos = new ArrayList<>();
+        for (Personaje personaje : personajeList ) {
+            dtos.add(personaje2DTO(personaje));
+        }
+        return dtos;
+    }
 
 }
