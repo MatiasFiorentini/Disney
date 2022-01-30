@@ -2,9 +2,11 @@ package com.alkemy.disney.disney.service.impl;
 
 import com.alkemy.disney.disney.dto.PersonajeBasicDTO;
 import com.alkemy.disney.disney.dto.PersonajeDTO;
+import com.alkemy.disney.disney.dto.PersonajeFiltersDTO;
 import com.alkemy.disney.disney.entity.Personaje;
 import com.alkemy.disney.disney.mapper.PersonajeMapper;
 import com.alkemy.disney.disney.repository.PersonajeRepository;
+import com.alkemy.disney.disney.repository.specifications.PersonajeSpecifications;
 import com.alkemy.disney.disney.service.PersonajeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PersonajeServiceImpl implements PersonajeService {
@@ -21,6 +24,9 @@ public class PersonajeServiceImpl implements PersonajeService {
 
     @Autowired
     private PersonajeRepository personajeRepository;
+
+    @Autowired
+    private PersonajeSpecifications personajeSpecifications;
 
     @Override
     @Transactional
@@ -49,8 +55,13 @@ public class PersonajeServiceImpl implements PersonajeService {
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        personajeRepository.deleteById(id);
+    public boolean delete(Long id) {
+        if (personajeRepository.existsById(id)){
+            personajeRepository.deleteById(id);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -69,5 +80,12 @@ public class PersonajeServiceImpl implements PersonajeService {
         Optional<Personaje> respuesta = personajeRepository.findById(id);
         PersonajeDTO result = personajeMapper.personaje2DTO(respuesta.get());
         return result;
+    }
+
+    @Override
+    public List<PersonajeDTO> getByFilters(String name, Integer age, Set<Long> movies, String order) {
+        PersonajeFiltersDTO filtersDTO = new PersonajeFiltersDTO(name,age,movies,order);
+        List<Personaje> personajeList = personajeRepository.findAll(personajeSpecifications.getByFilters(filtersDTO));
+        return null;
     }
 }

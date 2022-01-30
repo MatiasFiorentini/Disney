@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("personajes")
@@ -52,6 +53,17 @@ public class PersonajeController {
         PersonajeDTO personajeFind = personajeService.findById(id);
         return ResponseEntity.ok().body(personajeFind);
     }
+
+    public ResponseEntity<List<PersonajeDTO>> getDetailsFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer age,
+            @RequestParam(required = false) Set<Long> movies,
+            @RequestParam(required = false, defaultValue = "ASC") String order
+    ){
+        List<PersonajeDTO> personajes = personajeService.getByFilters(name,age,movies,order);
+        return ResponseEntity.ok(personajes);
+    }
+
 
 
 }

@@ -7,6 +7,7 @@ import com.alkemy.disney.disney.repository.GeneroRepository;
 import com.alkemy.disney.disney.service.GeneroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class GeneroServiceImpl implements GeneroService {
     private GeneroRepository generoRepository;
 
     @Override
+    @Transactional
     public GeneroDTO save(GeneroDTO dto) {
         Genero genero = generoMapper.generoDTO2Genero(dto);
         Genero generoSave = generoRepository.save(genero);
@@ -28,6 +30,7 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @Override
+    @Transactional
     public List<GeneroDTO> getAllGeneros() {
         List<Genero> generoList = generoRepository.findAll();
         List<GeneroDTO> result = generoMapper.generoList2DTOList(generoList);

@@ -53,7 +53,14 @@ public class PeliculaController {
         return ResponseEntity.ok().body(peliculaFind);
     }
 
-
-
+    @GetMapping("/filters")
+    public ResponseEntity<List<PeliculaDTO>> getDetailsByFilters(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false,defaultValue = "ASC") String order
+    ){
+        List<PeliculaDTO> peliculas = peliculaService.getByFilters(name,genre,order);
+        return ResponseEntity.ok(peliculas);
+    }
 
 }

@@ -13,10 +13,12 @@ public interface PeliculaService {
 
     List<PeliculaBasicDTO> getBasicPeliculas();
 
-    void delete(Long id);
+    boolean delete(Long id);
 
     PeliculaDTO update(Long id, PeliculaDTO peliculaDTO);
 
     PeliculaDTO findById(Long id);
+
+    List<PeliculaDTO> getByFilters(String name,String genre,String order);
 }
 
