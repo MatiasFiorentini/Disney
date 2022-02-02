@@ -1,13 +1,16 @@
 package com.alkemy.disney.disney.repository.specifications;
 
 import com.alkemy.disney.disney.dto.PersonajeFiltersDTO;
+import com.alkemy.disney.disney.entity.Pelicula;
 import com.alkemy.disney.disney.entity.Personaje;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,9 @@ public class PersonajeSpecifications {
             }
 
             if (!CollectionUtils.isEmpty(filtersDTO.getMovies())){
+                Join<Pelicula,Personaje> join = root.join("movies", JoinType.INNER);
+                Expression<String> moviesId = join.get("id");
+                predicates.add(moviesId.in(filtersDTO.getMovies()));
             }
 
             //Remove duplicates

@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class EmailServiceImpl implements EmailService {
+public class EmailServiceImpl implements EmailService{
+
 
     @Autowired
     private Environment env;
@@ -28,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
     private boolean enabled;
 
     @Override
-    public void sendWelcomeEmailTo(String To) {
+    public void sendWelcomeEmailTo(String to) {
         if (!enabled){
             return;
         }
@@ -36,10 +37,10 @@ public class EmailServiceImpl implements EmailService {
         String apiKey = env.getProperty("EMAIL_API_KEY"); //Edit config
 
         Email fromEmail = new Email(emailSender);
-        Email toEmail = new Email(To);
+        Email toEmail = new Email(to);
         Content content = new Content(
                 "text/plain",
-                "Bienvenido/a Diney"
+                "Bienvenido/a Disney"
         ); //Cuerpo del mail
         String subject = "ALkemy Disney"; //Asunto del email
 

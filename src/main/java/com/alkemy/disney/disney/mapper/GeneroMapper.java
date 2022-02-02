@@ -33,4 +33,13 @@ public class GeneroMapper {
         return dtos;
     }
 
+    public List<Genero> generoDTOList2Genero(List<GeneroDTO> generoDTO){
+        List<Genero> generoList = new ArrayList<>();
+        for (GeneroDTO dto: generoDTO) {
+            generoList.add(generoDTO2Genero(dto));
+        }
+        return generoList;
+    }
+
+
 }

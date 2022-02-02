@@ -15,7 +15,7 @@ public class PeliculaDTO {
     private String titulo;
     private LocalDate fechaCreacion;
     private Integer calificacion;
-    private Long generoId;
+    private List<GeneroDTO> generos;
     private List<PersonajeDTO> personajes;
 
 

@@ -18,16 +18,15 @@ public class UserDetailsCustomService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private EmailService emailService;
 
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { //Buscar
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { //Buscar por nombre de usuario
         UserEntity userEntity = userRepository.findByUsername(username);
         if (userEntity == null){
-            throw new UsernameNotFoundException("Username or password not fount");
+            throw new UsernameNotFoundException("Username or password not found");
         }
         return new User(userEntity.getUsername(),userEntity.getPassword(), Collections.emptyList());
     }

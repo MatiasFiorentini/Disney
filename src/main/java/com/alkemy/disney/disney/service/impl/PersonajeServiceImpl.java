@@ -4,6 +4,7 @@ import com.alkemy.disney.disney.dto.PersonajeBasicDTO;
 import com.alkemy.disney.disney.dto.PersonajeDTO;
 import com.alkemy.disney.disney.dto.PersonajeFiltersDTO;
 import com.alkemy.disney.disney.entity.Personaje;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.mapper.PersonajeMapper;
 import com.alkemy.disney.disney.repository.PersonajeRepository;
 import com.alkemy.disney.disney.repository.specifications.PersonajeSpecifications;
@@ -29,7 +30,6 @@ public class PersonajeServiceImpl implements PersonajeService {
     private PersonajeSpecifications personajeSpecifications;
 
     @Override
-    @Transactional
     public PersonajeDTO save(PersonajeDTO dto) {
         Personaje personaje = personajeMapper.personajeDTO2Peronaje(dto);
         Personaje personajeSave = personajeRepository.save(personaje);
@@ -38,7 +38,6 @@ public class PersonajeServiceImpl implements PersonajeService {
     }
 
     @Override
-    @Transactional
     public List<PersonajeDTO> getAllPersonajes() {
         List<Personaje> personajeList = personajeRepository.findAll();
         List<PersonajeDTO> result = personajeMapper.personajeList2DTOList(personajeList);
@@ -46,7 +45,6 @@ public class PersonajeServiceImpl implements PersonajeService {
     }
 
     @Override
-    @Transactional
     public List<PersonajeBasicDTO> getBasicPersonajes() {
         List<Personaje> personajeList = personajeRepository.findAll();
         List<PersonajeBasicDTO> result = personajeMapper.personajeList2BasicDTOList(personajeList);
@@ -54,7 +52,6 @@ public class PersonajeServiceImpl implements PersonajeService {
     }
 
     @Override
-    @Transactional
     public boolean delete(Long id) {
         if (personajeRepository.existsById(id)){
             personajeRepository.deleteById(id);
@@ -65,9 +62,11 @@ public class PersonajeServiceImpl implements PersonajeService {
     }
 
     @Override
-    @Transactional
     public PersonajeDTO update(Long id, PersonajeDTO personajeDTO) {
         Optional<Personaje> respuesta = personajeRepository.findById(id);
+        if (!respuesta.isPresent()){
+            throw new ParamNotFound("Id de personaje no válido");
+        }
         personajeMapper.personajeRefreshValues(respuesta.get(),personajeDTO);
         Personaje personajeSaved = personajeRepository.save(respuesta.get());
         PersonajeDTO result = personajeMapper.personaje2DTO(personajeSaved);
@@ -75,9 +74,11 @@ public class PersonajeServiceImpl implements PersonajeService {
     }
 
     @Override
-    @Transactional
     public PersonajeDTO findById(Long id) {
         Optional<Personaje> respuesta = personajeRepository.findById(id);
+        if (!respuesta.isPresent()){
+            throw new ParamNotFound("Id de personaje no válido");
+        }
         PersonajeDTO result = personajeMapper.personaje2DTO(respuesta.get());
         return result;
     }
@@ -86,6 +87,7 @@ public class PersonajeServiceImpl implements PersonajeService {
     public List<PersonajeDTO> getByFilters(String name, Integer age, Set<Long> movies, String order) {
         PersonajeFiltersDTO filtersDTO = new PersonajeFiltersDTO(name,age,movies,order);
         List<Personaje> personajeList = personajeRepository.findAll(personajeSpecifications.getByFilters(filtersDTO));
-        return null;
+        List<PersonajeDTO> personajeDTOS = personajeMapper.personajeList2DTOList(personajeList);
+        return personajeDTOS;
     }
 }

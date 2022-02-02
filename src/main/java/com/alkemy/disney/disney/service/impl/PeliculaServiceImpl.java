@@ -4,6 +4,7 @@ import com.alkemy.disney.disney.dto.PeliculaBasicDTO;
 import com.alkemy.disney.disney.dto.PeliculaDTO;
 import com.alkemy.disney.disney.dto.PeliculaFiltersDTO;
 import com.alkemy.disney.disney.entity.Pelicula;
+import com.alkemy.disney.disney.exception.ParamNotFound;
 import com.alkemy.disney.disney.mapper.PeliculaMapper;
 import com.alkemy.disney.disney.repository.PeliculaRepository;
 import com.alkemy.disney.disney.repository.specifications.PeliculaSpecifications;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PeliculaServiceImpl implements PeliculaService {
@@ -28,7 +30,6 @@ public class PeliculaServiceImpl implements PeliculaService {
     private PeliculaSpecifications peliculaSpecifications;
 
     @Override
-    @Transactional
     public PeliculaDTO save(PeliculaDTO dto) {
         Pelicula pelicula = peliculaMapper.peliculaDTO2Pelicula(dto);
         Pelicula peliculaSave = peliculaRepository.save(pelicula);
@@ -37,7 +38,6 @@ public class PeliculaServiceImpl implements PeliculaService {
     }
 
     @Override
-    @Transactional
     public List<PeliculaDTO> getAllPeliculas() {
         List<Pelicula> peliculaList = peliculaRepository.findAll();
         List<PeliculaDTO> result = peliculaMapper.peliculaList2DTOList(peliculaList);
@@ -45,7 +45,6 @@ public class PeliculaServiceImpl implements PeliculaService {
     }
 
     @Override
-    @Transactional
     public List<PeliculaBasicDTO> getBasicPeliculas() {
         List<Pelicula> peliculaList = peliculaRepository.findAll();
         List<PeliculaBasicDTO> result = peliculaMapper.peliculaList2BasicDTOList(peliculaList);
@@ -53,7 +52,6 @@ public class PeliculaServiceImpl implements PeliculaService {
     }
 
     @Override
-    @Transactional
     public boolean delete(Long id) {
         if (peliculaRepository.existsById(id)){
             peliculaRepository.deleteById(id);
@@ -64,9 +62,11 @@ public class PeliculaServiceImpl implements PeliculaService {
     }
 
     @Override
-    @Transactional
     public PeliculaDTO update(Long id, PeliculaDTO peliculaDTO) {
         Optional<Pelicula> respuesta = peliculaRepository.findById(id);
+        if (!respuesta.isPresent()){
+            throw new ParamNotFound("Id de película no válido");
+        }
         peliculaMapper.peliculaRefreshValues(respuesta.get(),peliculaDTO);
         Pelicula peliculaSaved = peliculaRepository.save(respuesta.get());
         PeliculaDTO result = peliculaMapper.pelicula2DTO(peliculaSaved);
@@ -74,16 +74,18 @@ public class PeliculaServiceImpl implements PeliculaService {
     }
 
     @Override
-    @Transactional
     public PeliculaDTO findById(Long id) {
         Optional<Pelicula> respuesta = peliculaRepository.findById(id);
+        if (!respuesta.isPresent()){
+            throw new ParamNotFound("Id de película no válido");
+        }
         PeliculaDTO result = peliculaMapper.pelicula2DTO(respuesta.get());
         return result;
     }
 
     @Override
-    public List<PeliculaDTO> getByFilters(String name, String genre, String order) {
-        PeliculaFiltersDTO filtersDTO = new PeliculaFiltersDTO(name, genre, order);
+    public List<PeliculaDTO> getByFilters(String name, Set<Long> genre, String order) {
+        PeliculaFiltersDTO filtersDTO = new PeliculaFiltersDTO(name,genre,order);
         List<Pelicula> peliculaList = peliculaRepository.findAll(peliculaSpecifications.getByFilters(filtersDTO));
         List<PeliculaDTO> peliculaDTOS = peliculaMapper.peliculaList2DTOList(peliculaList);
         return peliculaDTOS;

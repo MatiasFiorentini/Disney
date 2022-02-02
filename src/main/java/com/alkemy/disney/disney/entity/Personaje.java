@@ -29,8 +29,8 @@ public class Personaje {
 
     private boolean deleted = Boolean.FALSE;
 
-    /*@ManyToMany(mappedBy = "personajes", cascade = CascadeType.ALL)
-    private List<Pelicula> peliculas = new ArrayList<>();*/
+    @ManyToMany(mappedBy = "personajes", cascade = CascadeType.ALL)
+    private List<Pelicula> peliculas = new ArrayList<>();
 
 
 }

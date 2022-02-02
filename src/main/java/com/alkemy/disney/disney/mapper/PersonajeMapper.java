@@ -5,6 +5,7 @@ import com.alkemy.disney.disney.dto.PersonajeBasicDTO;
 import com.alkemy.disney.disney.dto.PersonajeDTO;
 import com.alkemy.disney.disney.entity.Personaje;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +13,10 @@ import java.util.List;
 
 @Component
 public class PersonajeMapper {
+
+    @Autowired
+    @Lazy
+    private PeliculaMapper peliculaMapper;
 
 
     public Personaje personajeDTO2Peronaje(PersonajeDTO dto){
@@ -32,6 +37,10 @@ public class PersonajeMapper {
         dto.setEdad(personaje.getEdad());
         dto.setPeso(personaje.getPeso());
         dto.setHistoria(personaje.getHistoria());
+
+        /*List<PeliculaDTO> peliculaDTO = peliculaMapper.peliculaList2DTOList(personaje.getPeliculas());
+        dto.setPeliculas(peliculaDTO);*/
+
         return dto;
     }
 
@@ -70,14 +79,6 @@ public class PersonajeMapper {
             personajeList.add(personajeDTO2Peronaje(dto));
         }
         return personajeList;
-    }
-
-    public List<PersonajeDTO> personajeSet2DTOListPersonaje(List<Personaje> personajeList){
-        List<PersonajeDTO> dtos = new ArrayList<>();
-        for (Personaje personaje : personajeList ) {
-            dtos.add(personaje2DTO(personaje));
-        }
-        return dtos;
     }
 
 }

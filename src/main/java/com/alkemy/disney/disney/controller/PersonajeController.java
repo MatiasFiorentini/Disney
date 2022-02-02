@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("personajes")
+@RequestMapping("/personajes")
 public class PersonajeController {
 
     @Autowired
@@ -54,6 +54,7 @@ public class PersonajeController {
         return ResponseEntity.ok().body(personajeFind);
     }
 
+    @GetMapping("/filters")
     public ResponseEntity<List<PersonajeDTO>> getDetailsFilters(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Integer age,

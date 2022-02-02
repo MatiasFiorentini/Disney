@@ -21,7 +21,6 @@ public class GeneroServiceImpl implements GeneroService {
     private GeneroRepository generoRepository;
 
     @Override
-    @Transactional
     public GeneroDTO save(GeneroDTO dto) {
         Genero genero = generoMapper.generoDTO2Genero(dto);
         Genero generoSave = generoRepository.save(genero);
@@ -30,7 +29,6 @@ public class GeneroServiceImpl implements GeneroService {
     }
 
     @Override
-    @Transactional
     public List<GeneroDTO> getAllGeneros() {
         List<Genero> generoList = generoRepository.findAll();
         List<GeneroDTO> result = generoMapper.generoList2DTOList(generoList);

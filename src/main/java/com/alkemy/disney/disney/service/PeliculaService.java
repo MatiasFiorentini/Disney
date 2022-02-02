@@ -4,6 +4,7 @@ import com.alkemy.disney.disney.dto.PeliculaBasicDTO;
 import com.alkemy.disney.disney.dto.PeliculaDTO;
 
 import java.util.List;
+import java.util.Set;
 
 public interface PeliculaService {
 
@@ -19,6 +20,8 @@ public interface PeliculaService {
 
     PeliculaDTO findById(Long id);
 
-    List<PeliculaDTO> getByFilters(String name,String genre,String order);
+    List<PeliculaDTO> getByFilters(String name,Set<Long> genre,String order);
+
+
 }
 

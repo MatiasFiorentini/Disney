@@ -34,12 +34,26 @@ public class Pelicula {
 
     private boolean deleted = Boolean.FALSE;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "genero_id"/*,insertable = false,updatable = false*/)
+    /*@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "genero_id" ,insertable = false,updatable = false)
     private Genero genero;
 
-    /*@Column(name = "genero_id", nullable = false)
+    @Column(name = "genero_id", nullable = false)
     private Long generoId;*/
+
+
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    @JoinTable(
+            name = "genero_pelicula",
+            joinColumns = @JoinColumn(name = "pelicula_id"),
+            inverseJoinColumns = @JoinColumn(name = "genero_id")
+    )
+    private List<Genero> generos = new ArrayList<>();
 
 
     @ManyToMany(

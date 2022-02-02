@@ -4,6 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -15,10 +17,10 @@ public class UserEntity implements UserDetails{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //@Email
+    @Email
     private String username;
 
-    //@Size(min = 8)
+    @Size(min = 6)
     private String password;
 
     private boolean accountNonExpired;
@@ -53,7 +55,7 @@ public class UserEntity implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return null;
     }
 
     @Override

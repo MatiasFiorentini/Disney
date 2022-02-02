@@ -1,10 +1,16 @@
 package com.alkemy.disney.disney.repository.specifications;
 
 import com.alkemy.disney.disney.dto.PeliculaFiltersDTO;
+import com.alkemy.disney.disney.entity.Genero;
 import com.alkemy.disney.disney.entity.Pelicula;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 
 import java.util.ArrayList;
@@ -27,18 +33,11 @@ public class PeliculaSpecifications {
                 );
             }
 
-            if (filtersDTO.getGenre() != null && filtersDTO.getGenre().isEmpty()){
-                predicates.add(criteriaBuilder.equal(root.get("generoId"), filtersDTO.getGenre()));
+            if (!CollectionUtils.isEmpty(filtersDTO.getGenre())){
+                Join<Genero,Pelicula> join = root.join("generos", JoinType.INNER);
+                Expression<String> genreId = join.get("id");
+                predicates.add(genreId.in(filtersDTO.getGenre()));
             }
-
-            /*if (StringUtils.hasLength(filtersDTO.getGenre())){
-                predicates.add(
-                        criteriaBuilder.like(
-                                criteriaBuilder.lower(root.get("generoId")),
-                                "%" + filtersDTO.getGenre() + "%"
-                        )
-                );
-            }*/
 
             //Remove duplicates
             query.distinct(true);

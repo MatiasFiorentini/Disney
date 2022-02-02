@@ -1,10 +1,14 @@
 package com.alkemy.disney.disney.mapper;
 
+import com.alkemy.disney.disney.dto.GeneroDTO;
 import com.alkemy.disney.disney.dto.PeliculaBasicDTO;
 import com.alkemy.disney.disney.dto.PeliculaDTO;
 import com.alkemy.disney.disney.dto.PersonajeDTO;
+import com.alkemy.disney.disney.entity.Genero;
 import com.alkemy.disney.disney.entity.Pelicula;
 import com.alkemy.disney.disney.entity.Personaje;
+import com.alkemy.disney.disney.repository.GeneroRepository;
+import com.alkemy.disney.disney.repository.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +20,8 @@ public class PeliculaMapper {
 
     @Autowired
     private PersonajeMapper personajeMapper;
+    @Autowired
+    private GeneroMapper generoMapper;
 
 
     public Pelicula peliculaDTO2Pelicula(PeliculaDTO dto){
@@ -24,7 +30,9 @@ public class PeliculaMapper {
         pelicula.setTitulo(dto.getTitulo());
         pelicula.setFechaCreacion(dto.getFechaCreacion());
         pelicula.setCalificacion(dto.getCalificacion());
-        pelicula.setGeneroId(dto.getGeneroId());
+
+        List<Genero> generoList = generoMapper.generoDTOList2Genero(dto.getGeneros());
+        pelicula.setGeneros(generoList);
 
         List<Personaje> personajeList = personajeMapper.personajeDTOList2Personaje(dto.getPersonajes());
         pelicula.setPersonajes(personajeList);
@@ -39,9 +47,11 @@ public class PeliculaMapper {
         dto.setTitulo(pelicula.getTitulo());
         dto.setFechaCreacion(pelicula.getFechaCreacion());
         dto.setCalificacion(pelicula.getCalificacion());
-        dto.setGeneroId(pelicula.getGeneroId());
 
-        List<PersonajeDTO> personajeDTO = personajeMapper.personajeSet2DTOListPersonaje(pelicula.getPersonajes());
+        List<GeneroDTO> generoDTO = generoMapper.generoList2DTOList(pelicula.getGeneros());
+        dto.setGeneros(generoDTO);
+
+        List<PersonajeDTO> personajeDTO = personajeMapper.personajeList2DTOList(pelicula.getPersonajes());
         dto.setPersonajes(personajeDTO);
         return dto;
     }
@@ -73,6 +83,6 @@ public class PeliculaMapper {
         pelicula.setTitulo(dto.getTitulo());
         pelicula.setFechaCreacion(dto.getFechaCreacion());
         pelicula.setCalificacion(dto.getCalificacion());
-        pelicula.setGeneroId(dto.getGeneroId());
     }
+
 }

@@ -3,6 +3,7 @@ package com.alkemy.disney.disney.auth.filter;
 import com.alkemy.disney.disney.auth.service.JwtUtils;
 import com.alkemy.disney.disney.auth.service.UserDetailsCustomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,11 +23,10 @@ public class JwtRequestFilters extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsCustomService userDetailsCustomService;
-
     @Autowired
     private JwtUtils jwtUtils;
-
     @Autowired
+    @Lazy
     private AuthenticationManager authenticationManager;
 
     @Override
@@ -37,7 +37,8 @@ public class JwtRequestFilters extends OncePerRequestFilter {
         String username = null;
         String jwt = null;
 
-        if (username != null && authorizationHeader.startsWith("Bearer ")){
+        //Bearer ES EL TIPO DE TOKEN
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
             jwt = authorizationHeader.substring(7);
             username = jwtUtils.extractUsername(jwt);
         }
@@ -48,13 +49,13 @@ public class JwtRequestFilters extends OncePerRequestFilter {
 
             if (jwtUtils.validateToken(jwt,userDetails)){
                 UsernamePasswordAuthenticationToken authReq =
-                        new UsernamePasswordAuthenticationToken(userDetails.getUsername(),userDetails.getPassword());
+                        new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword());
                 Authentication auth = authenticationManager.authenticate(authReq);
 
                 //Set auth in context
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
-            filterChain.doFilter(request, response);
         }
+        filterChain.doFilter(request, response);
     }
 }

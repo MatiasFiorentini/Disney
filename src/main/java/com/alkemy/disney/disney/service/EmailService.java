@@ -2,5 +2,5 @@ package com.alkemy.disney.disney.service;
 
 public interface EmailService {
 
-    void sendWelcomeEmailTo(String To);
+    void sendWelcomeEmailTo(String to);
 }

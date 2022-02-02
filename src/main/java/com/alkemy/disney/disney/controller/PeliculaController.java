@@ -9,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
-@RequestMapping("peliculas")
+@RequestMapping("/peliculas")
 public class PeliculaController {
 
     @Autowired
@@ -56,7 +57,7 @@ public class PeliculaController {
     @GetMapping("/filters")
     public ResponseEntity<List<PeliculaDTO>> getDetailsByFilters(
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) Set<Long> genre,
             @RequestParam(required = false,defaultValue = "ASC") String order
     ){
         List<PeliculaDTO> peliculas = peliculaService.getByFilters(name,genre,order);

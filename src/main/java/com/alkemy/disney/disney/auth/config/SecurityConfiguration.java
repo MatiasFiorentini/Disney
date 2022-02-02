@@ -19,9 +19,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsCustomService userDetailsCustomService;
-
     @Autowired
     private JwtRequestFilters jwtRequestFilter;
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance(); //para la practica no codificamos la pass
+        return NoOpPasswordEncoder.getInstance(); // en este caso no encriptamos la calve
     }
 
     @Override
@@ -48,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS); //por cada endpoint no haga una auth nueva
 
+        //CONTROLA QUE ESTEN LOS DATOS CORRECTOS PARA DEJARLO PASAR O NO
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
