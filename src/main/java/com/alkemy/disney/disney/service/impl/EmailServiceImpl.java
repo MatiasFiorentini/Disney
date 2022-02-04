@@ -40,9 +40,8 @@ public class EmailServiceImpl implements EmailService{
         Email toEmail = new Email(to);
         Content content = new Content(
                 "text/plain",
-                "Bienvenido/a Disney"
-        ); //Cuerpo del mail
-        String subject = "ALkemy Disney"; //Asunto del email
+                "Bienvenido/a Disney"); //Cuerpo del mail
+        String subject = "Bienvenido al challenge de alkemy: API DISNEY"; //Asunto del email
 
         Mail mail = new Mail(fromEmail,subject,toEmail,content); //creo el mail
         SendGrid sg = new SendGrid(apiKey);

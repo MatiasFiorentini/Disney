@@ -27,7 +27,7 @@ public class GeneroMapper {
 
     public List<GeneroDTO> generoList2DTOList(List<Genero> generoList){
         List<GeneroDTO> dtos = new ArrayList<>();
-        for (Genero genero : generoList ) { //Recorro generoList
+        for (Genero genero : generoList ){
             dtos.add(genero2DTO(genero));
         }
         return dtos;
@@ -35,10 +35,15 @@ public class GeneroMapper {
 
     public List<Genero> generoDTOList2Genero(List<GeneroDTO> generoDTO){
         List<Genero> generoList = new ArrayList<>();
-        for (GeneroDTO dto: generoDTO) {
+        for (GeneroDTO dto: generoDTO){
             generoList.add(generoDTO2Genero(dto));
         }
         return generoList;
+    }
+
+    public void generoRefreshValues(Genero genero, GeneroDTO dto){
+        genero.setNombre(dto.getNombre());
+        genero.setImagen(dto.getImagen());
     }
 
 
