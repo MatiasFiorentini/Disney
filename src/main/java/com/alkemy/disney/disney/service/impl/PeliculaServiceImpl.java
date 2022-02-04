@@ -33,14 +33,14 @@ public class PeliculaServiceImpl implements PeliculaService {
     public PeliculaDTO save(PeliculaDTO dto) {
         Pelicula pelicula = peliculaMapper.peliculaDTO2Pelicula(dto);
         Pelicula peliculaSave = peliculaRepository.save(pelicula);
-        PeliculaDTO result = peliculaMapper.pelicula2DTO(peliculaSave);
+        PeliculaDTO result = peliculaMapper.pelicula2DTO(peliculaSave,true);
         return result;
     }
 
     @Override
     public List<PeliculaDTO> getAllPeliculas() {
         List<Pelicula> peliculaList = peliculaRepository.findAll();
-        List<PeliculaDTO> result = peliculaMapper.peliculaList2DTOList(peliculaList);
+        List<PeliculaDTO> result = peliculaMapper.peliculaList2DTOList(peliculaList,true);
         return result;
     }
 
@@ -69,7 +69,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         }
         peliculaMapper.peliculaRefreshValues(respuesta.get(),peliculaDTO);
         Pelicula peliculaSaved = peliculaRepository.save(respuesta.get());
-        PeliculaDTO result = peliculaMapper.pelicula2DTO(peliculaSaved);
+        PeliculaDTO result = peliculaMapper.pelicula2DTO(peliculaSaved,false);
         return result;
     }
 
@@ -79,7 +79,7 @@ public class PeliculaServiceImpl implements PeliculaService {
         if (!respuesta.isPresent()){
             throw new ParamNotFound("Id de película no válido");
         }
-        PeliculaDTO result = peliculaMapper.pelicula2DTO(respuesta.get());
+        PeliculaDTO result = peliculaMapper.pelicula2DTO(respuesta.get(),false);
         return result;
     }
 
@@ -87,7 +87,7 @@ public class PeliculaServiceImpl implements PeliculaService {
     public List<PeliculaDTO> getByFilters(String name, Set<Long> genre, String order) {
         PeliculaFiltersDTO filtersDTO = new PeliculaFiltersDTO(name,genre,order);
         List<Pelicula> peliculaList = peliculaRepository.findAll(peliculaSpecifications.getByFilters(filtersDTO));
-        List<PeliculaDTO> peliculaDTOS = peliculaMapper.peliculaList2DTOList(peliculaList);
+        List<PeliculaDTO> peliculaDTOS = peliculaMapper.peliculaList2DTOList(peliculaList,true);
         return peliculaDTOS;
     }
 }

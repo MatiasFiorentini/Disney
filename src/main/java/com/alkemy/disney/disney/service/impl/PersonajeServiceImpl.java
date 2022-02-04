@@ -33,14 +33,14 @@ public class PersonajeServiceImpl implements PersonajeService {
     public PersonajeDTO save(PersonajeDTO dto) {
         Personaje personaje = personajeMapper.personajeDTO2Peronaje(dto);
         Personaje personajeSave = personajeRepository.save(personaje);
-        PersonajeDTO result = personajeMapper.personaje2DTO(personajeSave);
+        PersonajeDTO result = personajeMapper.personaje2DTO(personajeSave,false);
         return result;
     }
 
     @Override
     public List<PersonajeDTO> getAllPersonajes() {
         List<Personaje> personajeList = personajeRepository.findAll();
-        List<PersonajeDTO> result = personajeMapper.personajeList2DTOList(personajeList);
+        List<PersonajeDTO> result = personajeMapper.personajeList2DTOList(personajeList,true);
         return result;
     }
 
@@ -69,7 +69,7 @@ public class PersonajeServiceImpl implements PersonajeService {
         }
         personajeMapper.personajeRefreshValues(respuesta.get(),personajeDTO);
         Personaje personajeSaved = personajeRepository.save(respuesta.get());
-        PersonajeDTO result = personajeMapper.personaje2DTO(personajeSaved);
+        PersonajeDTO result = personajeMapper.personaje2DTO(personajeSaved,false);
         return result;
     }
 
@@ -79,7 +79,7 @@ public class PersonajeServiceImpl implements PersonajeService {
         if (!respuesta.isPresent()){
             throw new ParamNotFound("Id de personaje no válido");
         }
-        PersonajeDTO result = personajeMapper.personaje2DTO(respuesta.get());
+        PersonajeDTO result = personajeMapper.personaje2DTO(respuesta.get(),true);
         return result;
     }
 
@@ -87,7 +87,7 @@ public class PersonajeServiceImpl implements PersonajeService {
     public List<PersonajeDTO> getByFilters(String name, Integer age, Set<Long> movies, String order) {
         PersonajeFiltersDTO filtersDTO = new PersonajeFiltersDTO(name,age,movies,order);
         List<Personaje> personajeList = personajeRepository.findAll(personajeSpecifications.getByFilters(filtersDTO));
-        List<PersonajeDTO> personajeDTOS = personajeMapper.personajeList2DTOList(personajeList);
+        List<PersonajeDTO> personajeDTOS = personajeMapper.personajeList2DTOList(personajeList,true);
         return personajeDTOS;
     }
 }

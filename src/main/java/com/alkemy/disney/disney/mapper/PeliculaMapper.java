@@ -40,7 +40,7 @@ public class PeliculaMapper {
         return pelicula;
     }
 
-    public PeliculaDTO pelicula2DTO(Pelicula pelicula){
+    public PeliculaDTO pelicula2DTO(Pelicula pelicula, boolean load){
         PeliculaDTO dto = new PeliculaDTO();
         dto.setId(pelicula.getId());
         dto.setImagen(pelicula.getImagen());
@@ -51,15 +51,17 @@ public class PeliculaMapper {
         List<GeneroDTO> generoDTO = generoMapper.generoList2DTOList(pelicula.getGeneros());
         dto.setGeneros(generoDTO);
 
-        List<PersonajeDTO> personajeDTO = personajeMapper.personajeList2DTOList(pelicula.getPersonajes());
-        dto.setPersonajes(personajeDTO);
+        if (load){
+            List<PersonajeDTO> personajeDTO = personajeMapper.personajeList2DTOList(pelicula.getPersonajes(),false);
+            dto.setPersonajes(personajeDTO);
+        }
         return dto;
     }
 
-    public List<PeliculaDTO> peliculaList2DTOList(List<Pelicula> peliculaList){
+    public List<PeliculaDTO> peliculaList2DTOList(List<Pelicula> peliculaList,boolean load){
         List<PeliculaDTO> dtos = new ArrayList<>();
         for (Pelicula pelicula : peliculaList ) {
-            dtos.add(pelicula2DTO(pelicula));
+            dtos.add(pelicula2DTO(pelicula,load));
         }
         return dtos;
     }

@@ -33,7 +33,7 @@ public class PersonajeSpecifications {
             }
 
             if (!CollectionUtils.isEmpty(filtersDTO.getMovies())){
-                Join<Pelicula,Personaje> join = root.join("movies", JoinType.INNER);
+                Join<Pelicula,Personaje> join = root.join("peliculas", JoinType.INNER);
                 Expression<String> moviesId = join.get("id");
                 predicates.add(moviesId.in(filtersDTO.getMovies()));
             }
