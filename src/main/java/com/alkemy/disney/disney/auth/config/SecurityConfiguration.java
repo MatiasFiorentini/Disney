@@ -30,15 +30,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsCustomService);
     }
 
-    @Bean
+   /* @Bean
     public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance(); // No encripto clave
-    }
-
-    /*@Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder // Encriptar clave
     }*/
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(); // Encriptar clave
+    }
 
     @Override
     @Bean

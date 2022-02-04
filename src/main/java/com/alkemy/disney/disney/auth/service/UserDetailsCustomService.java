@@ -34,7 +34,7 @@ public class UserDetailsCustomService implements UserDetailsService {
             throw new UsernameNotFoundException("Username or password not found");
         }
         //return new User(userEntity.getUsername(),userEntity.getPassword(), Collections.emptyList());
-
+        
         return User.withUsername(userEntity.getUsername())
                 .password(userEntity.getPassword())
                 .authorities(Collections.emptyList())
@@ -42,12 +42,13 @@ public class UserDetailsCustomService implements UserDetailsService {
     }
 
     public boolean save(UserDTO userDTO){
+
+        String pass = userDTO.getPassword();
+        String passEncript = passwordEncoder.encode(pass);
+
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(userDTO.getUsername());
-        userEntity.setPassword(userDTO.getPassword());
-
-        String password = passwordEncoder.encode(userDTO.getPassword());
-        userEntity.setPassword(password);
+        userEntity.setPassword(passEncript);
 
         userEntity = userRepository.save(userEntity);
 
