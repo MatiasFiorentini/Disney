@@ -29,16 +29,16 @@ public class UserDetailsCustomService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { //Buscar por nombre de usuario
-        UserEntity userEntity = userRepository.findByUsername(username);
+        UserEntity userEntity = userRepository.buscarUsuario(username);
         if (userEntity == null){
             throw new UsernameNotFoundException("Username or password not found");
         }
-        //return new User(userEntity.getUsername(),userEntity.getPassword(), Collections.emptyList());
-        
-        return User.withUsername(userEntity.getUsername())
+        return new User(userEntity.getUsername(),userEntity.getPassword(), Collections.emptyList());
+
+        /*return User.withUsername(userEntity.getUsername())
                 .password(userEntity.getPassword())
                 .authorities(Collections.emptyList())
-                .build();
+                .build();*/
     }
 
     public boolean save(UserDTO userDTO){
@@ -49,6 +49,10 @@ public class UserDetailsCustomService implements UserDetailsService {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(userDTO.getUsername());
         userEntity.setPassword(passEncript);
+
+        /*UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(userDTO.getUsername());
+        userEntity.setPassword(userDTO.getPassword());*/
 
         userEntity = userRepository.save(userEntity);
 

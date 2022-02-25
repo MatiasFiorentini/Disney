@@ -7,8 +7,6 @@ import com.alkemy.disney.disney.dto.PersonajeDTO;
 import com.alkemy.disney.disney.entity.Genero;
 import com.alkemy.disney.disney.entity.Pelicula;
 import com.alkemy.disney.disney.entity.Personaje;
-import com.alkemy.disney.disney.repository.GeneroRepository;
-import com.alkemy.disney.disney.repository.PeliculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

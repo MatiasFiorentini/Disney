@@ -4,6 +4,7 @@ import com.alkemy.disney.disney.auth.filter.JwtRequestFilters;
 import com.alkemy.disney.disney.auth.service.UserDetailsCustomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,14 +24,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserDetailsCustomService userDetailsCustomService;
     @Autowired
     private JwtRequestFilters jwtRequestFilter;
+    @Autowired
+    @Lazy
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsCustomService);
+        auth.userDetailsService(userDetailsCustomService).passwordEncoder(passwordEncoder);
     }
 
-   /* @Bean
+   /*@Bean
     public PasswordEncoder passwordEncoder(){
         return NoOpPasswordEncoder.getInstance(); // No encripto clave
     }*/
