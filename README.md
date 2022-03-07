@@ -1,4 +1,4 @@
-🖱💻 API REST DISNEY 📘📖
+🖱💻 API REST DISNEY 📘📖 (realizada en la pre-aceleración de Alkemy)
 
 Desarrollo de una API para explorar el mundo de Disney, la cual permite conocer y modificar los
 personajes que lo componen y entender en qué películas estos participaron.
