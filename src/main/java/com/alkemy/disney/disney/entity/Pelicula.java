@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "pelicula")
+@Table(name = "PELICULAS")
 @Getter
 @Setter
 @SQLDelete(sql = "UPDATE pelicula SET deleted = true WHERE id=?")
@@ -23,13 +23,17 @@ public class Pelicula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "IMAGEN")
     private String imagen;
+
+    @Column(name = "TITULO")
     private String titulo;
 
-    @Column(name = "fecha_creacion")
+    @Column(name = "FECHA_CREACION")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate fechaCreacion;
 
+    @Column(name = "CALIFICACION")
     private Integer calificacion;
 
     private boolean deleted = Boolean.FALSE;

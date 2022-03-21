@@ -8,7 +8,6 @@ import com.alkemy.disney.disney.repository.GeneroRepository;
 import com.alkemy.disney.disney.service.GeneroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,4 +57,5 @@ public class GeneroServiceImpl implements GeneroService {
         GeneroDTO result = generoMapper.genero2DTO(generoSaved);
         return result;
     }
+
 }

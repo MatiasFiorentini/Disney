@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
-@Table(name = "user")
+@Table(name = "USERS")
 public class UserEntity implements UserDetails{
 
     @Id
@@ -18,9 +18,11 @@ public class UserEntity implements UserDetails{
     private Long id;
 
     @Email
+    @Column(name = "USERNAME")
     private String username;
 
     @Size(min = 6)
+    @Column(name = "PASSWORD")
     private String password;
 
     private boolean accountNonExpired;

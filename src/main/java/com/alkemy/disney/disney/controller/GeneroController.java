@@ -39,4 +39,5 @@ public class GeneroController {
         GeneroDTO generoUpdate = generoService.update(id,generoDTO);
         return ResponseEntity.ok().body(generoUpdate);
     }
+
 }

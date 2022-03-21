@@ -8,7 +8,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "genero")
+@Table(name = "GENEROS")
 @Setter
 @Getter
 @SQLDelete(sql = "UPDATE genero SET deleted = true WHERE id=?")
@@ -19,7 +19,10 @@ public class Genero {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "NOMBRE")
     private String nombre;
+
+    @Column(name = "IMAGEN")
     private String imagen;
 
     private boolean deleted = Boolean.FALSE;

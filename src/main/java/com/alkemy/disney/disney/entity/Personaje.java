@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "personaje")
+@Table(name = "PERSONAJES")
 @Getter
 @Setter
 @SQLDelete(sql = "UPDATE personaje SET deleted = true WHERE id=?")
@@ -21,10 +21,19 @@ public class Personaje {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "NOMBRE")
     private String nombre;
+
+    @Column(name = "IMAGEN")
     private String imagen;
+
+    @Column(name = "EDAD")
     private Integer edad;
+
+    @Column(name = "PESO")
     private Integer peso;
+
+    @Column(name = "HISTORIA")
     private String historia;
 
     private boolean deleted = Boolean.FALSE;
