@@ -22,7 +22,7 @@ public class GeneroController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<GeneroDTO>> getAll(){        ;
+    public ResponseEntity<List<GeneroDTO>> getAll(){
         return ResponseEntity.ok().body(generoService.getAllGeneros());
     }
 
