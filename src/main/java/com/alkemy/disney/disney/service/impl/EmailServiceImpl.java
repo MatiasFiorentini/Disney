@@ -25,7 +25,7 @@ public class EmailServiceImpl implements EmailService{
     @Value("${alkemy.disney.email.sender}")
     private String emailSender;
 
-    @Value("${alkemy.diney.email.enabled}")
+    @Value("${alkemy.disney.email.enabled}")
     private boolean enabled;
 
     @Override

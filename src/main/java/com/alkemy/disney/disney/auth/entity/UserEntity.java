@@ -54,12 +54,6 @@ public class UserEntity implements UserDetails{
         this.username = username;
     }
 
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
     @Override
     public String getPassword() {
         return password;
@@ -67,6 +61,11 @@ public class UserEntity implements UserDetails{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     @Override

@@ -20,20 +20,17 @@ public class PeliculaController {
 
     @PostMapping
     public ResponseEntity<PeliculaDTO> save(@RequestBody PeliculaDTO peliculaDTO){
-        PeliculaDTO peliculaSaved = peliculaService.save(peliculaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(peliculaSaved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(peliculaService.save(peliculaDTO));
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<PeliculaDTO>> getAll(){
-        List<PeliculaDTO> peliculaList = peliculaService.getAllPeliculas();
-        return ResponseEntity.ok().body(peliculaList);
+        return ResponseEntity.ok().body(peliculaService.getAllPeliculas());
     }
 
     @GetMapping("/movies")
     public ResponseEntity<List<PeliculaBasicDTO>> getBasicPeliculas(){
-        List<PeliculaBasicDTO> peliculaBasicList = peliculaService.getBasicPeliculas();
-        return ResponseEntity.ok().body(peliculaBasicList);
+        return ResponseEntity.ok().body(peliculaService.getBasicPeliculas());
     }
 
     @DeleteMapping("/{id}")
@@ -44,14 +41,12 @@ public class PeliculaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PeliculaDTO> update(@PathVariable Long id,@RequestBody PeliculaDTO peliculaDTO){
-        PeliculaDTO peliculaUpdate = peliculaService.update(id,peliculaDTO);
-        return ResponseEntity.ok().body(peliculaUpdate);
+        return ResponseEntity.ok().body(peliculaService.update(id,peliculaDTO));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PeliculaDTO> findById(@PathVariable Long id){
-        PeliculaDTO peliculaFind = peliculaService.findById(id);
-        return ResponseEntity.ok().body(peliculaFind);
+        return ResponseEntity.ok().body(peliculaService.findById(id));
     }
 
     @GetMapping("/filters")

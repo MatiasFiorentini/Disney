@@ -18,14 +18,12 @@ public class GeneroController {
 
     @PostMapping
     public ResponseEntity<GeneroDTO> save(@RequestBody GeneroDTO generoDTO){
-        GeneroDTO generoSaved = generoService.save(generoDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(generoSaved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(generoService.save(generoDTO));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<GeneroDTO>> getAll(){
-        List<GeneroDTO> generoList = generoService.getAllGeneros();
-        return ResponseEntity.ok().body(generoList);
+    public ResponseEntity<List<GeneroDTO>> getAll(){        ;
+        return ResponseEntity.ok().body(generoService.getAllGeneros());
     }
 
     @DeleteMapping("/{id}")
@@ -36,8 +34,7 @@ public class GeneroController {
 
     @PutMapping("/{id}")
     public ResponseEntity<GeneroDTO> update(@PathVariable Long id,@RequestBody GeneroDTO generoDTO){
-        GeneroDTO generoUpdate = generoService.update(id,generoDTO);
-        return ResponseEntity.ok().body(generoUpdate);
+        return ResponseEntity.ok().body(generoService.update(id,generoDTO));
     }
 
 }
